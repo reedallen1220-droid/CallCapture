@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CallCapture Systems – Stop Losing Revenue to Missed Calls</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --dark: #111214;
+    --card: #161819;
+    --border: rgba(255,255,255,0.08);
+    --accent: #ff4d1c;
+    --accent2: #ff7a1a;
+    --white: #f5f3ee;
+    --muted: #888;
+    --green: #22c55e;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 40px;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .logo span { color: var(--accent); }
+  nav a.cta-nav {
+    background: var(--accent);
+    color: #fff;
+    padding: 10px 22px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    letter-spacing: 0.02em;
+  }
+  nav a.cta-nav:hover { background: var(--accent2); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative;
+    padding: 120px 40px 80px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 60% 40%, rgba(255,77,28,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 50% at 10% 80%, rgba(255,122,26,0.06) 0%, transparent 60%);
+  }
+  /* Grid lines */
+  .hero-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 30%, transparent 100%);
+  }
+  .hero-content {
+    max-width: 1100px; margin: 0 auto; position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,77,28,0.12); border: 1px solid rgba(255,77,28,0.3);
+    padding: 6px 14px; border-radius: 100px; margin-bottom: 24px;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent2);
+  }
+  .hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: 0.01em;
+    color: var(--white);
+  }
+  h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    margin-top: 24px;
+    font-size: 1.15rem;
+    color: #bbb;
+    max-width: 500px;
+    line-height: 1.7;
+  }
+  .hero-ctas {
+    margin-top: 36px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff; font-weight: 700; font-size: 1rem;
+    padding: 16px 32px; border-radius: 6px; text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s; letter-spacing: 0.01em;
+    box-shadow: 0 4px 24px rgba(255,77,28,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,77,28,0.5); }
+  .btn-secondary {
+    color: var(--white); font-weight: 500; font-size: 1rem;
+    padding: 16px 28px; border-radius: 6px; text-decoration: none;
+    border: 1px solid var(--border); transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.05); }
+
+  /* Hero stats card */
+  .hero-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .hero-card h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 24px;
+  }
+  .stat-row {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    padding: 18px 0; border-bottom: 1px solid var(--border);
+  }
+  .stat-row:last-child { border-bottom: none; }
+  .stat-label { font-size: 0.9rem; color: var(--muted); }
+  .stat-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem; letter-spacing: 0.04em;
+    color: var(--green);
+  }
+  .stat-value.red { color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 100px 40px; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+  }
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.6rem, 5vw, 4rem);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--white);
+  }
+  h2 .accent { color: var(--accent); }
+
+  /* PROBLEM SECTION */
+  .problem { background: var(--dark); }
+  .problem-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 56px;
+    align-items: start;
+  }
+  .problem-desc { font-size: 1.1rem; color: #bbb; line-height: 1.8; }
+  .problem-desc p { margin-bottom: 20px; }
+  .pain-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .pain-list li {
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(255,77,28,0.06); border: 1px solid rgba(255,77,28,0.15);
+    padding: 16px 20px; border-radius: 8px;
+    font-weight: 500; font-size: 0.97rem;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .pain-list li:hover { background: rgba(255,77,28,0.1); border-color: rgba(255,77,28,0.3); }
+  .pain-list li::before { content: '✗'; color: var(--accent); font-size: 1rem; font-weight: 700; flex-shrink: 0; }
+  .callout-banner {
+    margin-top: 40px;
+    background: linear-gradient(135deg, rgba(255,77,28,0.15), rgba(255,122,26,0.08));
+    border: 1px solid rgba(255,77,28,0.25);
+    border-radius: 10px; padding: 20px 28px;
+    font-weight: 600; font-size: 1rem;
+    color: var(--white);
+  }
+
+  /* SOLUTION */
+  .solution-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    margin-top: 56px;
+  }
+  .solution-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px 24px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .solution-card:hover { border-color: rgba(255,77,28,0.4); transform: translateY(-4px); }
+  .solution-card .icon {
+    font-size: 1.6rem; margin-bottom: 16px;
+  }
+  .solution-card h4 {
+    font-weight: 700; font-size: 1rem; margin-bottom: 8px; color: var(--white);
+  }
+  .solution-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+  .solution-bottom {
+    margin-top: 40px;
+    display: flex; gap: 16px; flex-wrap: wrap;
+  }
+  .no-tag {
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    border-radius: 100px; padding: 10px 20px;
+    font-size: 0.9rem; color: var(--muted);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .no-tag span { color: var(--accent); font-weight: 700; }
+
+  /* ROI */
+  .roi { background: var(--dark); }
+  .roi-cards {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+    margin-top: 56px;
+  }
+  .roi-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px 20px; text-align: center;
+  }
+  .roi-card .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem; letter-spacing: 0.04em;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block; margin-bottom: 6px;
+  }
+  .roi-card .lbl { font-size: 0.85rem; color: var(--muted); }
+  .roi-cta {
+    margin-top: 40px;
+    background: linear-gradient(135deg, rgba(255,77,28,0.12), rgba(255,122,26,0.06));
+    border: 1px solid rgba(255,77,28,0.3);
+    border-radius: 12px; padding: 32px 36px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+  }
+  .roi-cta-text { font-size: 1.15rem; font-weight: 600; }
+  .roi-cta-text span { color: var(--accent); }
+
+  /* HOW IT WORKS */
+  .steps {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    margin-top: 56px; position: relative;
+  }
+  .steps::before {
+    content: '';
+    position: absolute; top: 52px; left: 16%; right: 16%; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent));
+    z-index: 0;
+  }
+  .step { text-align: center; padding: 0 24px; position: relative; z-index: 1; }
+  .step-num {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem;
+    box-shadow: 0 0 0 8px var(--black);
+    color: #fff;
+  }
+  .step h4 { font-weight: 700; font-size: 1.05rem; margin-bottom: 10px; }
+  .step p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+  /* WHO IT'S FOR */
+  .who { background: var(--dark); }
+  .industry-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    margin-top: 56px;
+  }
+  .industry-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 24px 22px;
+    display: flex; align-items: center; gap: 16px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .industry-card:hover { border-color: rgba(255,77,28,0.3); background: rgba(255,77,28,0.04); }
+  .industry-card .emoji { font-size: 1.8rem; flex-shrink: 0; }
+  .industry-card span { font-weight: 600; font-size: 0.97rem; }
+  .who-footer { margin-top: 40px; text-align: center; color: var(--muted); font-size: 1rem; }
+  .who-footer strong { color: var(--white); }
+
+  /* PRICING */
+  .pricing-card {
+    max-width: 560px; margin: 56px auto 0;
+    background: var(--card); border: 1px solid rgba(255,77,28,0.3);
+    border-radius: 20px; overflow: hidden;
+  }
+  .pricing-header {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    padding: 32px 40px;
+  }
+  .pricing-header .tag {
+    background: rgba(0,0,0,0.25); display: inline-block;
+    border-radius: 100px; padding: 4px 14px;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: rgba(255,255,255,0.9); margin-bottom: 14px;
+  }
+  .pricing-header h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 0.04em; color: #fff;
+  }
+  .pricing-body { padding: 36px 40px; }
+  .price-line { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+  .price-main {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem; letter-spacing: 0.02em;
+    color: var(--white);
+  }
+  .price-label { color: var(--muted); font-size: 0.9rem; }
+  .price-monthly { color: #aaa; font-size: 1rem; margin-bottom: 28px; }
+  .price-monthly strong { color: var(--accent); }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+  .price-features li { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; }
+  .price-features li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+  .spots {
+    text-align: center; margin-top: 18px;
+    font-size: 0.85rem; color: var(--muted);
+  }
+  .spots strong { color: var(--accent); }
+
+  /* FINAL CTA */
+  .final-cta {
+    background: linear-gradient(135deg, rgba(255,77,28,0.12) 0%, rgba(10,10,10,0) 60%),
+                var(--black);
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .final-cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .final-cta .container { position: relative; z-index: 1; }
+  .final-cta h2 { font-size: clamp(2.8rem, 5.5vw, 5rem); }
+  .final-cta p { color: #aaa; margin: 20px auto; max-width: 500px; font-size: 1.05rem; }
+  .final-cta .btn-primary { font-size: 1.1rem; padding: 18px 44px; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 40px; text-align: center;
+    color: var(--muted); font-size: 0.85rem;
+  }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--white); }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 16px 20px; }
+    section { padding: 70px 20px; }
+    .hero { padding: 110px 20px 60px; }
+    .hero-content { grid-template-columns: 1fr; gap: 40px; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .solution-grid { grid-template-columns: 1fr 1fr; }
+    .roi-cards { grid-template-columns: 1fr 1fr; }
+    .steps { grid-template-columns: 1fr; gap: 32px; }
+    .steps::before { display: none; }
+    .industry-grid { grid-template-columns: 1fr 1fr; }
+    .pricing-body { padding: 28px 24px; }
+    .pricing-header { padding: 28px 24px; }
+  }
+  @media (max-width: 560px) {
+    .solution-grid { grid-template-columns: 1fr; }
+    .industry-grid { grid-template-columns: 1fr; }
+    .roi-cards { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Call<span>Capture</span> Systems</a>
+  <a href="#demo" class="cta-nav">Book a Demo</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-badge">
+        <span class="dot"></span>
+        24/7 Automated Booking
+      </div>
+      <h1>Stop Losing Revenue to <em>Missed Calls</em></h1>
+      <p class="hero-sub">We install 24/7 automated booking systems that answer your calls, schedule appointments, and capture more jobs — even after hours.</p>
+      <div class="hero-ctas">
+        <a href="#demo" class="btn-primary">Book a 15-Minute Demo</a>
+        <a href="#how-it-works" class="btn-secondary">See How It Works →</a>
+      </div>
+    </div>
+    <div class="hero-card fade-up">
+      <h3>💰 Revenue Leak Tracker</h3>
+      <div class="stat-row">
+        <span class="stat-label">Missed calls per week</span>
+        <span class="stat-value red">5–10</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Avg ticket value</span>
+        <span class="stat-value red">$400–$1,500</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Lost per month</span>
+        <span class="stat-value red">$2K–$7K</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">With CallCapture (recovered)</span>
+        <span class="stat-value">$2K–$7K ✓</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="container">
+    <p class="section-label fade-up">The Problem</p>
+    <h2 class="fade-up">Most Service Businesses Lose <span class="accent">Thousands</span> Every Month</h2>
+    <div class="problem-grid">
+      <div class="problem-desc fade-up">
+        <p>If you're in HVAC, plumbing, electrical, roofing, or any local service industry — missed calls mean missed revenue.</p>
+        <p>Every unanswered call is a customer calling your competitor next. They answer. They book. They get paid.</p>
+        <div class="callout-banner">Your competitors who answer first — win first.</div>
+      </div>
+      <ul class="pain-list fade-up">
+        <li>Calls go to voicemail</li>
+        <li>After-hours inquiries are lost</li>
+        <li>Office staff gets overwhelmed</li>
+        <li>No instant booking options</li>
+        <li>Slow response times cost you jobs</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section id="solution">
+  <div class="container">
+    <p class="section-label fade-up">The Solution</p>
+    <h2 class="fade-up">Install a 24/7 <span class="accent">Revenue Capture</span> System</h2>
+    <p style="color:#aaa;margin-top:16px;max-width:600px" class="fade-up">CallCapture Systems installs automated booking infrastructure designed specifically for service businesses.</p>
+    <div class="solution-grid">
+      <div class="solution-card fade-up">
+        <div class="icon">🤖</div>
+        <h4>AI Answers Instantly</h4>
+        <p>Your AI receptionist picks up every call, 24/7, with zero hold times.</p>
+      </div>
+      <div class="solution-card fade-up">
+        <div class="icon">📅</div>
+        <h4>Direct Calendar Booking</h4>
+        <p>Appointments booked directly into your calendar in real time.</p>
+      </div>
+      <div class="solution-card fade-up">
+        <div class="icon">💬</div>
+        <h4>SMS Confirmations</h4>
+        <p>Automatic text confirmations and reminders keep jobs from falling through.</p>
+      </div>
+      <div class="solution-card fade-up">
+        <div class="icon">🌙</div>
+        <h4>After-Hours Coverage</h4>
+        <p>Never lose a lead to voicemail again — we handle overflow and after-hours calls.</p>
+      </div>
+      <div class="solution-card fade-up">
+        <div class="icon">🔗</div>
+        <h4>Website Lead Capture</h4>
+        <p>Captures leads from your website and funnels them into your booking flow.</p>
+      </div>
+      <div class="solution-card fade-up">
+        <div class="icon">⚙️</div>
+        <h4>CRM Integration</h4>
+        <p>Connects seamlessly with your existing CRM so nothing falls through the cracks.</p>
+      </div>
+    </div>
+    <div class="solution-bottom fade-up">
+      <div class="no-tag"><span>✕</span> No more voicemail.</div>
+      <div class="no-tag"><span>✕</span> No more lost opportunities.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ROI -->
+<section class="roi">
+  <div class="container">
+    <p class="section-label fade-up">Return on Investment</p>
+    <h2 class="fade-up">What Is One <span class="accent">Missed Job</span> Worth?</h2>
+    <div class="roi-cards">
+      <div class="roi-card fade-up">
+        <span class="num">$400–<br>$1,500</span>
+        <span class="lbl">Avg service ticket</span>
+      </div>
+      <div class="roi-card fade-up">
+        <span class="num">5–10</span>
+        <span class="lbl">Missed calls / week</span>
+      </div>
+      <div class="roi-card fade-up">
+        <span class="num">3–5</span>
+        <span class="lbl">Captured jobs / month</span>
+      </div>
+      <div class="roi-card fade-up">
+        <span class="num">$2K–<br>$7K</span>
+        <span class="lbl">Recoverable revenue / month</span>
+      </div>
+    </div>
+    <div class="roi-cta fade-up">
+      <div class="roi-cta-text">Our system costs <span>a fraction</span> of the revenue it recovers.</div>
+      <a href="#demo" class="btn-primary">See the Numbers →</a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="container">
+    <p class="section-label fade-up">Process</p>
+    <h2 class="fade-up">Simple. <span class="accent">Automated.</span> Reliable.</h2>
+    <div class="steps">
+      <div class="step fade-up">
+        <div class="step-num">1</div>
+        <h4>We Build Your Booking System</h4>
+        <p>Modern website + automated AI receptionist tailored to your exact business and services.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num">2</div>
+        <h4>We Install & Integrate</h4>
+        <p>Calendar sync, SMS confirmations, and CRM connection — all handled by our team.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num">3</div>
+        <h4>You Capture More Jobs</h4>
+        <p>Every call answered. Every lead captured. Revenue flows in automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO -->
+<section class="who">
+  <div class="container">
+    <p class="section-label fade-up">Who It's For</p>
+    <h2 class="fade-up">Built for <span class="accent">Local Service</span> Businesses</h2>
+    <div class="industry-grid">
+      <div class="industry-card fade-up"><span class="emoji">❄️</span><span>HVAC Companies</span></div>
+      <div class="industry-card fade-up"><span class="emoji">🔧</span><span>Plumbing Companies</span></div>
+      <div class="industry-card fade-up"><span class="emoji">⚡</span><span>Electrical Contractors</span></div>
+      <div class="industry-card fade-up"><span class="emoji">🏠</span><span>Roofing Companies</span></div>
+      <div class="industry-card fade-up"><span class="emoji">🛠️</span><span>Home Service Providers</span></div>
+      <div class="industry-card fade-up"><span class="emoji">📍</span><span>Local Service Professionals</span></div>
+    </div>
+    <p class="who-footer fade-up" style="margin-top:36px">If <strong>missed calls cost you money</strong> — this system is for you.</p>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <p class="section-label fade-up" style="text-align:center">Limited Offer</p>
+    <h2 class="fade-up" style="text-align:center">Founders Rate <span class="accent">Available</span></h2>
+    <p style="text-align:center;color:#aaa;margin-top:12px;font-size:0.95rem" class="fade-up">We're currently offering a limited Founders Rate for our first five partners while we build new case studies.</p>
+    <div class="pricing-card fade-up">
+      <div class="pricing-header">
+        <div class="tag">⚡ Founders Rate</div>
+        <h3>Website + AI Booking System</h3>
+      </div>
+      <div class="pricing-body">
+        <div class="price-line">
+          <span class="price-main">$1,997</span>
+          <span class="price-label">one-time setup</span>
+        </div>
+        <p class="price-monthly">then <strong>$397/month</strong> — ongoing management & optimization</p>
+        <ul class="price-features">
+          <li>Custom-built website optimized for conversions</li>
+          <li>24/7 AI receptionist & call handling</li>
+          <li>Automated appointment booking & calendar sync</li>
+          <li>SMS confirmations & reminders</li>
+          <li>After-hours & overflow coverage</li>
+          <li>Website lead capture forms</li>
+          <li>CRM integration</li>
+          <li>Ongoing support & optimization</li>
+        </ul>
+        <a href="#demo" class="btn-primary" style="display:block;text-align:center;width:100%">Book My Demo — Claim Founders Rate</a>
+        <p class="spots">⚠️ <strong>Only 5 spots available</strong> at this rate.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="demo">
+  <div class="container">
+    <p class="section-label fade-up" style="text-align:center">Get Started</p>
+    <h2 class="fade-up">Ready to Stop Losing Jobs<br>to <span class="accent">Voicemail?</span></h2>
+    <p class="fade-up">Book a 15-minute demo and see exactly how CallCapture works for your business.</p>
+    <a href="https://getcallcapture.com/demo" class="btn-primary fade-up">Book My Demo</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 CallCapture Systems &nbsp;·&nbsp; <a href="https://getcallcapture.com">getcallcapture.com</a> &nbsp;·&nbsp; All rights reserved.</p>
+</footer>
+
+<script>
+  // Intersection observer for fade-up animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 80 * (Array.from(entry.target.parentElement?.children || []).indexOf(entry.target)));
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
